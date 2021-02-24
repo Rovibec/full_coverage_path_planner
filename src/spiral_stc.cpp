@@ -6,6 +6,8 @@
 #include <list>
 #include <string>
 #include <vector>
+#include "std_msgs/String.h"
+ #include <sstream>
 
 #include "full_coverage_path_planner/spiral_stc.h"
 #include <pluginlib/class_list_macros.h>
@@ -24,6 +26,8 @@ void SpiralSTC::initialize(std::string name, costmap_2d::Costmap2DROS* costmap_r
     ros::NodeHandle nh, private_named_nh("~/" + name);
 
     plan_pub_ = private_named_nh.advertise<nav_msgs::Path>("plan", 1);
+    waypoints_pub_ = private_named_nh.advertise<std_msgs::String>("full_coverage_waypoints", 1);
+
     // Try to request the cpp-grid from the cpp_grid map_server
     cpp_grid_client_ = nh.serviceClient<nav_msgs::GetMap>("static_map");
 
@@ -256,6 +260,18 @@ bool SpiralSTC::makePlan(const geometry_msgs::PoseStamped& start, const geometry
                                               spiral_cpp_metrics_.visited_counter);
   ROS_INFO("naive cpp completed!");
   ROS_INFO("Converting path to plan");
+
+  std::stringstream ss;
+  std_msgs::String waypointList;
+
+  std::list<Point_t>::iterator it;
+  
+  for (it = goalPoints.begin(); it != goalPoints.end(); ++it)
+  {
+    ss << it->x << "," << it->y << ",0;";
+  }
+  waypointList.data = ss.str();
+  waypoints_pub_.publish(waypointList);
 
   parsePointlist2Plan(start, goalPoints, plan);
   // Print some metrics:

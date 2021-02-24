@@ -101,6 +101,7 @@ protected:
                  geometry_msgs::PoseStamped const& realStart,
                  Point_t& scaledStart);
   ros::Publisher plan_pub_;
+  ros::Publisher waypoints_pub_;
   ros::ServiceClient cpp_grid_client_;
   nav_msgs::OccupancyGrid cpp_grid_;
   float robot_radius_;
