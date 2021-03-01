@@ -74,17 +74,6 @@ public:
 
   virtual bool makePlan(const geometry_msgs::PoseStamped& start,
                         const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>& plan) = 0;
-
-protected:
-  /**
-   * Convert internal representation of a to a ROS path
-   * @param start Start pose of robot
-   * @param goalpoints Goal points from Spiral Algorithm
-   * @param plan  Output plan variable
-   */
-  void parsePointlist2Plan(const geometry_msgs::PoseStamped& start, std::list<Point_t> const& goalpoints,
-                           std::vector<geometry_msgs::PoseStamped>& plan);
-
   /**
    * Convert ROS Occupancy grid to internal grid representation, given the size of a single tile
    * @param cpp_grid_ ROS occupancy grid representation. Cells higher that 65 are considered occupied
@@ -111,6 +100,17 @@ protected:
   fPoint_t grid_origin_;
   bool initialized_;
   geometry_msgs::PoseStamped previous_goal_;
+protected:
+  /**
+   * Convert internal representation of a to a ROS path
+   * @param start Start pose of robot
+   * @param goalpoints Goal points from Spiral Algorithm
+   * @param plan  Output plan variable
+   */
+  void parsePointlist2Plan(const geometry_msgs::PoseStamped& start, std::list<Point_t> const& goalpoints,
+                           std::vector<geometry_msgs::PoseStamped>& plan);
+
+
 
   struct spiral_cpp_metrics_type
   {

@@ -52,17 +52,19 @@ public:
                                         int &multiple_pass_counter,
                                         int &visited_counter);
 
+
+
 private:
-  /**
+/**
    * @brief Given a goal pose in the world, compute a plan
    * @param start The start pose
    * @param goal The goal pose
    * @param plan The plan... filled by the planner
    * @return True if a valid plan was found, false otherwise
    */
+  
   bool makePlan(const geometry_msgs::PoseStamped &start, const geometry_msgs::PoseStamped &goal,
                 std::vector<geometry_msgs::PoseStamped> &plan);
-
   /**
    * @brief  Initialization function for the FullCoveragePathPlanner object
    * @param  name The name of this planner
@@ -72,4 +74,4 @@ private:
 };
 
 }  // namespace full_coverage_path_planner
-#endif  // FULL_COVERAGE_PATH_PLANNER_SPIRAL_STC_H
+#endif  // FULL_COVERAGE_PATH_PLANNER_SPIRAL_STC
